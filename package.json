@@ -1,0 +1,38 @@
+{
+  "name": "cricket-live-analytics",
+  "version": "1.0.0",
+  "description": "Real-time cricket match analytics platform with live scores, statistics, and AI-powered insights",
+  "scripts": {
+    "install-all": "npm install && npm install --workspace=apps/backend && npm install --workspace=apps/frontend",
+    "dev": "concurrently \"npm run dev --workspace=apps/backend\" \"npm run dev --workspace=apps/frontend\"",
+    "dev:backend": "npm run dev --workspace=apps/backend",
+    "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "build": "npm run build --workspace=apps/backend && npm run build --workspace=apps/frontend",
+    "start": "npm run start --workspace=apps/backend",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose up -d --build"
+  },
+  "keywords": [
+    "cricket",
+    "live-analytics",
+    "sports",
+    "real-time",
+    "websocket",
+    "next.js",
+    "node.js"
+  ],
+  "author": "Arpan",
+  "license": "MIT",
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
