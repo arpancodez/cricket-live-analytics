@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: cricket-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: cricket
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - cricket-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: cricket-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - cricket-network
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: cricket-backend
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongodb:27017/cricket
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your_jwt_secret_key_here
+    depends_on:
+      - mongodb
+      - redis
+    volumes:
+      - ./apps/backend:/app
+      - /app/node_modules
+    networks:
+      - cricket-network
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: cricket-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_WS_URL: ws://localhost:3001
+    depends_on:
+      - backend
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules
+    networks:
+      - cricket-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  cricket-network:
+    driver: bridge
