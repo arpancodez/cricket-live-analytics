@@ -319,3 +319,25 @@ For support, email arpan@example.com or open an issue on GitHub.
 ---
 
 **⭐ If you find this project helpful, please give it a star!**
+
+
+## Getting Started
+
+```bash
+npm install
+npm start
+```
+
+## API Documentation
+
+### Real-time Updates
+- WebSocket connection for live score updates
+- ML predictions every 30 seconds
+- Player performance calculations
+
+## Tech Stack
+
+- Frontend: Next.js, WebSockets
+- Backend: Node.js, Express
+- ML: Python, TensorFlow
+- Database: MongoDB
